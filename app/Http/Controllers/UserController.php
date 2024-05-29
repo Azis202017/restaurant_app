@@ -14,11 +14,17 @@ class UserController extends Controller
     {
         try {
             $user = Auth::user();
-            return response()->json($user, 200);
+
+            $fotoUrl = url('/') . '/image/' . ($user->foto ?: 'default.png');
+
+            $userData = $user->toArray();
+            $userData['foto_url'] = $fotoUrl;
+
+            return response()->json($userData, 200);
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
-            ], 200);
+            ], 500);
         }
     }
     public function login(Request $request)
@@ -41,7 +47,7 @@ class UserController extends Controller
                 throw new \Exception('Invalid Credentials');
             }
 
-            $tokenResult = $user->createToken('calmifyToken')->plainTextToken;
+            $tokenResult = $user->createToken('resep_app')->plainTextToken;
             return response()->json([
                 'access_token' => $tokenResult,
                 'token_type' => 'Bearer',
@@ -49,7 +55,7 @@ class UserController extends Controller
             ], 200);
         } catch (Exception $error) {
             return response()->json([
-                'message' => ' username dan password salah',
+                'message' => " username dan password salah $error",
             ], 500);
         }
     }
@@ -57,20 +63,20 @@ class UserController extends Controller
     {
         try {
             $request->validate([
-                'nama' => ['required', 'string', 'max:255'],
+                'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255',],
             ]);
 
 
-          $user =  User::create([
-                'nama' => $request->nama,
+            $user =  User::create([
+                'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'role' => 'user',
             ]);
 
 
-         
+
 
 
 
