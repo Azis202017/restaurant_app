@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('resep/find-my-recept',[ResepController::class,'findMyResept']);
     Route::post('resep/edit/{id}',[ResepController::class,'update']);
 
-
+    
 
 
 

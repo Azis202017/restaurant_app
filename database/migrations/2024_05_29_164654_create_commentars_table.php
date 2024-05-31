@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('commentars', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('community_id');
+
             $table->text('title');
             $table->string('foto')->nullable();
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('community_id')->on('communities')->references('id')->onDelete('cascade')->onUpdate('cascade');
+
             $table->timestamps();
         });
     }

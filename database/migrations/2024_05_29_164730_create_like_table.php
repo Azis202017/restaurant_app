@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('like', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('commentar_id');
+            $table->unsignedBigInteger('community_id');
             $table->timestamps();
-            $table->foreign('commentar_id')->on('commentars')->onDelete('cascade')->onUpdate('cascade')->references('id');
+            $table->foreign('community_id')->on('communities')->onDelete('cascade')->onUpdate('cascade')->references('id');
         });
     }
 
