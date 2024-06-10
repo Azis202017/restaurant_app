@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Commentar extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id', 'title','community_id'
+    ];
+    public function community()
+    {
+        return $this->belongsTo(Community::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

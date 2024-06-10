@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentarController;
 use App\Http\Controllers\CommunityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('resep/edit/{id}',[ResepController::class,'update']);
     Route::post('report/',[ReportController::class,'create']);
     Route::post('community/create',[CommunityController::class,'create']);
+    Route::get('community/comment/{id}',[CommentarController::class,'index']);
+    Route::post('community/commentar/',[CommentarController::class,'create']);
+
 
 
 });

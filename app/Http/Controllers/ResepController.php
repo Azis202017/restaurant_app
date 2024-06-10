@@ -120,6 +120,7 @@ class ResepController extends Controller
         $id
     ) {
         $resep = Resep::find($id);
+        
         $resep->status = $request->status;
         $resep->save();
         return response()->json($resep, 200);

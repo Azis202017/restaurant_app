@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Tips extends Model
 {
     use HasFactory;
-    protected $fillable = ['judul','cover','langkah-langkah'];
+    protected $fillable = ['judul','cover','langkah-langkah','user_id'];
 }
