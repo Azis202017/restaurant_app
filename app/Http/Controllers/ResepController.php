@@ -10,6 +10,9 @@ class ResepController extends Controller
 {
     public function index(Request $request)
     {
+        // Get the authenticated user's ID
+        $userId = auth()->id();
+
         // Mengambil parameter query untuk filtering dan sorting
         $query = Resep::query();
 
@@ -21,7 +24,8 @@ class ResepController extends Controller
             $query->where('status', 'like', '%' . $request->input('status') . '%');
         }
 
-
+        // Exclude recipes created by the authenticated user
+        $query->where('user_id', '!=', $userId);
 
         $resep = $query->paginate(50);
 
@@ -31,6 +35,38 @@ class ResepController extends Controller
         });
 
         return response()->json($resep);
+    }
+
+
+
+
+    public function create(Request $request)
+    {
+        if ($request->file('foto')) {
+            $uploadedFile = $request->file('foto');
+            $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+            $uploadedFile->move(public_path('tips'), $imageName);
+        } else {
+            // No custom photo provided, use the default photo
+            $imageName = 'default.png';
+        }
+        $request->validate([
+            'judul_resep' => 'required',
+        ]);
+
+        $resep = Resep::create([
+            'judul_resep' => $request->judul_resep,
+            'lama_memasak' => $request->lama_memasak,
+            'cara_memasak' => $request->cara_memasak,
+            'foto_resep' => $imageName,
+            'langkah-langkah' => $request->langkah_langkah,
+            'status' => 'diajukan',
+            'user_id' => Auth::user()->id,
+
+        ]);
+
+
+        return response()->json(['data' => $resep], 201);
     }
 
     public function update(Request $request, $id)

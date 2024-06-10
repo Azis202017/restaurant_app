@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tips;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TipsController extends Controller
 {
@@ -34,6 +35,7 @@ class TipsController extends Controller
             'judul' => $request->judul,
             'cover' => $imageName,
             'langkah-langkah' => $request->langkah_langkah,
+            'user_id' => Auth::user()->id,
         ]);
 
 

@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\CommunityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TipsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ResepController;
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -19,10 +21,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('resep/status/{id}',[ResepController::class,'changeStatus']);
     Route::get('resep/find-my-recept',[ResepController::class,'findMyResept']);
     Route::post('resep/edit/{id}',[ResepController::class,'update']);
-
-    
-
-
+    Route::post('report/',[ReportController::class,'create']);
+    Route::post('community/create',[CommunityController::class,'create']);
 
 
 });

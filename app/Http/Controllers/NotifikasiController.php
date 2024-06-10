@@ -28,19 +28,12 @@ class NotifikasiController extends Controller
             // No custom photo provided, use the default photo
             $imageName = 'default.png';
         }
-        if ($request->file('image_food')) {
-            $uploadedFile = $request->file('image_food');
-            $imageFood = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-            $uploadedFile->move(public_path('notifikasi'), $imageFood);
-        } else {
-            // No custom photo provided, use the default photo
-            $imageFood = 'default.png';
-        }
+
         $notifikasi = Notifikasi::create([
             'title' => $request->title,
             'image' => $imageName,
             'description' => $request->description,
-            'image_food' => $imageFood,
+            'resep_id' => $request->resep_id,
         ]);
         return response()->json($notifikasi, 201);
     }

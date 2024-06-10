@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('tips', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('judul');
             $table->string('cover');
             $table->text('langkah-langkah');
+            $table->foreign('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade')->references('id');
+
             $table->timestamps();
         });
     }

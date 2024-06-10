@@ -75,11 +75,6 @@ class UserController extends Controller
                 'role' => 'user',
             ]);
 
-
-
-
-
-
             return response()->json([
                 'token_type' => 'Bearer',
                 'message' => 'Berhasil registrasi',
