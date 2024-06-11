@@ -30,7 +30,7 @@ class ResepController extends Controller
         $resep = $query->paginate(50);
 
         $resep->getCollection()->transform(function ($resep) {
-            $resep->foto_url = asset('resep/' . $resep->foto_resep);
+            $resep->foto_url = asset('resepp/' . $resep->foto_resep);
             return $resep;
         });
 
@@ -45,7 +45,7 @@ class ResepController extends Controller
         if ($request->file('foto')) {
             $uploadedFile = $request->file('foto');
             $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-            $uploadedFile->move(public_path('resep'), $imageName);
+            $uploadedFile->move(public_path('resepp'), $imageName);
         } else {
             // No custom photo provided, use the default photo
             $imageName = 'default.png';
@@ -87,7 +87,7 @@ class ResepController extends Controller
         if ($request->file('foto')) {
             // Hapus foto lama jika ada
             if ($resep->foto_resep && $resep->foto_resep !== 'default.png') {
-                $oldImagePath = public_path('resep') . '/' . $resep->foto_resep;
+                $oldImagePath = public_path('resepp') . '/' . $resep->foto_resep;
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath);
                 }
@@ -96,7 +96,7 @@ class ResepController extends Controller
             // Simpan foto baru
             $uploadedFile = $request->file('foto');
             $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-            $uploadedFile->move(public_path('resep'), $imageName);
+            $uploadedFile->move(public_path('resepp'), $imageName);
         } else {
             // Gunakan foto lama jika tidak ada foto baru diupload
             $imageName = $resep->foto_resep;
@@ -138,7 +138,7 @@ class ResepController extends Controller
         $resep = $query->paginate(50);
 
         $resep->getCollection()->transform(function ($resep) {
-            $resep->foto_url = asset('resep/' . $resep->foto_resep);
+            $resep->foto_url = asset('resepp/' . $resep->foto_resep);
             return $resep;
         });
 

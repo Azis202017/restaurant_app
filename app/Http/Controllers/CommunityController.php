@@ -10,14 +10,11 @@ class CommunityController extends Controller
 {
     public function index()
     {
-        $data = Community::with(['user'])->get();
+        $data = Community::with(['user', 'commentar'])->get();
 
-        // Transform community and user foto_url
         $data->transform(function ($community) {
-            // Add foto_url for community
             $community->foto_url = asset('community/' . $community->image);
 
-            // Add foto_url for user
             if ($community->user) {
                 $community->user->foto_url = asset('image/' . $community->user->foto);
             }
@@ -45,7 +42,7 @@ class CommunityController extends Controller
             'user_id' => Auth::user()->id,
             'image' => $imageName,
         ]);
-        
+
 
 
         return response()->json($community);

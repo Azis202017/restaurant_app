@@ -28,7 +28,7 @@ class UserController extends Controller
             // Include the user's reseps in the response and construct the full URL for each reseps's photo
             $reseps = $user->resep()->get()->map(function ($resep) {
                 $resepArray = $resep->toArray();
-                $resepArray['foto_resep_url'] = url('/') . '/resep/' . $resep->foto_resep;
+                $resepArray['foto_resep_url'] = url('/') . '/resepp/' . $resep->foto_resep;
                 return $resepArray;
             });
 
@@ -102,6 +102,53 @@ class UserController extends Controller
             ], 403);
         }
     }
+    public function editProfile(Request $request)
+    {
+        try {
+            $user = Auth::user();
+
+            $request->validate([
+                'name' => ['string', 'max:255'],
+                'email' => ['string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+                'password' => ['string', 'min:8', 'confirmed'],
+                'foto' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // Optional photo validation
+            ]);
+
+            if ($request->has('name')) {
+                $user->name = $request->name;
+            }
+
+            if ($request->has('email')) {
+                $user->email = $request->email;
+            }
+
+            if ($request->has('password')) {
+                $user->password = Hash::make($request->password);
+            }
+
+            if ($request->hasFile('foto')) {
+                // Handle the file upload
+                $image = $request->file('foto');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('image'), $imageName);
+                $user->foto = $imageName;
+            }
+
+            $user->save();
+
+            return response()->json([
+                'message' => 'Profile updated successfully',
+                'user' => $user
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Failed to update profile',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
 
     public function logout(Request $request)
     {

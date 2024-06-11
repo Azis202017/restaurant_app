@@ -12,6 +12,8 @@ use App\Http\Controllers\ResepController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'index']);
+    Route::post('/user/edit', [UserController::class, 'editProfile']);
+
     Route::get('/tips', [TipsController::class, 'index']);
     Route::post('/tips/add-tips', [TipsController::class, 'create']);
     Route::get('notifikasi', [NotifikasiController::class,'index']);
