@@ -45,7 +45,7 @@ class ResepController extends Controller
         if ($request->file('foto')) {
             $uploadedFile = $request->file('foto');
             $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-            $uploadedFile->move(public_path('tips'), $imageName);
+            $uploadedFile->move(public_path('resep'), $imageName);
         } else {
             // No custom photo provided, use the default photo
             $imageName = 'default.png';
@@ -120,7 +120,7 @@ class ResepController extends Controller
         $id
     ) {
         $resep = Resep::find($id);
-        
+
         $resep->status = $request->status;
         $resep->save();
         return response()->json($resep, 200);

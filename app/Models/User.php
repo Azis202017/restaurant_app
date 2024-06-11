@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Resep;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -53,6 +54,9 @@ class User extends Authenticatable
         static::creating(function ($model) {
             $model->foto = $model->foto ?? 'default.png';
         });
+    }
+    public function resep() {
+        return $this->hasMany(Resep::class);
     }
 
 }

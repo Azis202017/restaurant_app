@@ -15,11 +15,26 @@ class UserController extends Controller
         try {
             $user = Auth::user();
 
+            // Construct the URL for the user's photo.
+            // If the user does not have a photo, use 'default.png' as the default photo.
             $fotoUrl = url('/') . '/image/' . ($user->foto ?: 'default.png');
 
+            // Convert the user object to an array
             $userData = $user->toArray();
+
+            // Add the photo URL to the user data array
             $userData['foto_url'] = $fotoUrl;
 
+            // Include the user's reseps in the response and construct the full URL for each reseps's photo
+            $reseps = $user->resep()->get()->map(function ($resep) {
+                $resepArray = $resep->toArray();
+                $resepArray['foto_resep_url'] = url('/') . '/resep/' . $resep->foto_resep;
+                return $resepArray;
+            });
+
+            $userData['reseps'] = $reseps;
+
+            // Return the user data as a JSON response with a 200 HTTP status code
             return response()->json($userData, 200);
         } catch (Exception $e) {
             return response()->json([

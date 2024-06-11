@@ -23,6 +23,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('resep/find-my-recept',[ResepController::class,'findMyResept']);
     Route::post('resep/edit/{id}',[ResepController::class,'update']);
     Route::post('report/',[ReportController::class,'create']);
+    Route::get('community/',[CommunityController::class,'index']);
+
     Route::post('community/create',[CommunityController::class,'create']);
     Route::get('community/comment/{id}',[CommentarController::class,'index']);
     Route::post('community/commentar/',[CommentarController::class,'create']);

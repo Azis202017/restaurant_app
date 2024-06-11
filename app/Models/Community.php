@@ -14,4 +14,7 @@ class Community extends Model
         'description',
         'image',
     ];
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }
