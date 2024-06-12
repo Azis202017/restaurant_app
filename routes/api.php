@@ -24,6 +24,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('resep/status/{id}',[ResepController::class,'changeStatus']);
     Route::get('resep/find-my-recept',[ResepController::class,'findMyResept']);
     Route::post('resep/edit/{id}',[ResepController::class,'update']);
+    Route::get('resep/{id}',[ResepController::class,'show']);
+
     Route::post('report/',[ReportController::class,'create']);
     Route::get('community/',[CommunityController::class,'index']);
 

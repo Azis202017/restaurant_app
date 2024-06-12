@@ -21,5 +21,9 @@ class ResepController extends Controller
 
 
 }
+public function delete($id) {
+    $resep = Resep::find($id);
+    $resep->delete();
+}
 
 }

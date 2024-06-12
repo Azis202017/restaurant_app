@@ -13,6 +13,8 @@
             <tr>
                 <th>Judul</th>
                 <th>Status</th>
+                <th>Aksi</th>
+
 
 
 
@@ -45,6 +47,8 @@ e               </tr>
                         <button class="btn btn-success ms-2" type="submit">Simpan</button>
                     </form>
                 </td>
+                <td><a href="{{ route('resep.delete', $resep->id) }}" class="btn btn-danger">Delete</a></td>
+
             </tr>
             @endforeach
         </tbody>

@@ -11,8 +11,12 @@ Route::post('/login',[AuthController::class,'login'])->name('login');
 Route::middleware(['auth.dashboard'])->group(function () {
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
     Route::get('/resep', [ResepController::class,'index'])->name('resep');
+    Route::get('/resep/delete/{id}', [ResepController::class,'delete'])->name('resep.delete');
+
     Route::get('/report', [ReportController::class,'index'])->name('report');
     Route::post('/report/edit/{id}', [ReportController::class,'editStatus'])->name('report.edit');
+    Route::get('/report/delete/{id}', [ReportController::class,'delete'])->name('report.delete');
+
     Route::post('/update-status/{id}',[ ResepController::class,'updateStatus'])->name('update_status');
 
 

@@ -110,7 +110,6 @@ class UserController extends Controller
             $request->validate([
                 'name' => ['string', 'max:255'],
                 'email' => ['string', 'email', 'max:255', 'unique:users,email,' . $user->id],
-                'password' => ['string', 'min:8', 'confirmed'],
                 'foto' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // Optional photo validation
             ]);
 

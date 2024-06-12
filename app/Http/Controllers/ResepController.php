@@ -36,6 +36,27 @@ class ResepController extends Controller
 
         return response()->json($resep);
     }
+    public function show($id)
+    {
+        // Get the authenticated user's ID
+        $userId = auth()->id();
+
+        // Retrieve the recipe by ID and exclude recipes created by the authenticated user
+        $resep = Resep::where('id', $id)
+                      ->where('user_id', '!=', $userId)
+                      ->first();
+
+        // If the recipe does not exist or belongs to the authenticated user, return a 404 response
+        if (!$resep) {
+            return response()->json(['message' => 'Recipe not found or access denied.'], 404);
+        }
+
+        // Transform the recipe to include the photo URL
+        $resep->foto_url = asset('resepp/' . $resep->foto_resep);
+
+        return response()->json($resep);
+    }
+
 
 
 
